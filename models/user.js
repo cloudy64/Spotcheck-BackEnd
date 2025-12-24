@@ -9,6 +9,12 @@ const userSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  role: {
+    type: String,
+    enum: ['Customer', 'admin'],
+    default: 'Customer',
+    required: true,
+  },
 });
 
 userSchema.set('toJSON', {
