@@ -35,10 +35,12 @@ app.use('/auth', authCtrl);
 app.use('/test-jwt', testJwtRouter);
 app.use('/cafes', cafesCtrl); 
 
+app.use('/users', verifyToken, usersCtrl);
+app.use('/seat-updates', verifyToken, seatUpdatesCtrl);
 
-app.use(verifyToken);
-app.use('/users', usersCtrl);
-app.use('/seat-updates', seatUpdatesCtrl); 
+// app.use(verifyToken);
+// app.use('/users', usersCtrl);
+// app.use('/seat-updates', seatUpdatesCtrl); 
 
 app.listen(PORT, () => {
   console.log(`Express app ready on port ${PORT}`);
