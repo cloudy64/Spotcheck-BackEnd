@@ -19,20 +19,18 @@ router.post('/sign-up', async (req, res) => {
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
     const role = req.body.role === 'admin' ? 'admin' : 'customer';
   
+    const token = jwt.sign({
+      username: req.body.username,
+      role: req.body.role,
+    }, process.env.JWT_SECRET);
+    console.log(token);
 
     const newUser = await User.create({
       username: req.body.username,
       hashedPassword,
       role,
+      token,
     });
-
-    const payload = {
-      username: newUser.username,
-      _id: newUser._id,
-      role: newUser.role,
-    };
-
-    const token = jwt.sign(payload, process.env.JWT_SECRET);
 
     res.json({ token, user: newUser });
   } catch (err) {
@@ -61,7 +59,6 @@ router.post('/sign-in', async (req, res) => {
       _id: userInDatabase._id,
       role: userInDatabase.role,
     };
-  
    
     const token = jwt.sign(payload, process.env.JWT_SECRET);
 
