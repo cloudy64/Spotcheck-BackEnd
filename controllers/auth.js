@@ -17,25 +17,24 @@ router.post('/sign-up', async (req, res) => {
     }
 
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
-    const role = req.body.role === 'admin' ? 'admin' : 'customer';
+    const role = req.body.role === 'admin' ? 'admin' : 'student';
   
     const token = jwt.sign({
       username: req.body.username,
       role: req.body.role,
     }, process.env.JWT_SECRET);
-    console.log(token);
 
     const newUser = await User.create({
       username: req.body.username,
-      hashedPassword,
-      role,
-      token,
+      hashedPassword: hashedPassword,
+      role: role,
+      token: token,
     });
 
     res.json({ token, user: newUser });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ err: 'Something went wrong!' });
+    res.status(500).json({ err: 'Something went wrong!', eee: err });
   }
 });
 

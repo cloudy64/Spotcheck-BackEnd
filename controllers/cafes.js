@@ -27,6 +27,17 @@ router.post('/', async (req, res) => {
 });
 
 
+router.get('/:id', async (req, res) => {
+  try {
+    const cafe = await Cafe.findById(
+      req.params.id,
+    );
+    res.json(cafe);
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+});
+
 router.put('/:id', async (req, res) => {
   try {
     if (req.user.role !== 'admin') {
