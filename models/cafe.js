@@ -79,7 +79,6 @@ cafeSchema.pre('save', function(next) {
       this.status = 'Full';
     }
   }
-  next();
 });
 
 const Cafe = mongoose.model('Cafes', cafeSchema);

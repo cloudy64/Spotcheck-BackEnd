@@ -14,37 +14,16 @@ router.get('/', async (_req, res) => {
 });
 
 router.post('/', async (req, res) => {
-
-  try {
-    res.status(400).json({ 'user': req.body });
-
-    if (req.user.role !== 'admin') {
-      return res.status(403).json({ err: 'Not authorized' });
-    }
-
-    const {
-      name,
-      location,
-      description,
-      seatsTotal = 0,
-      seatsAvailable = 0,
-      photo,
-    } = req.body;
-
-    const cafe = await Cafe.create({
-      name,
-      location,
-      description,
-      seatsTotal,
-      seatsAvailable,
-      photo,
-      createdBy: req.user._id,
-    });
-
-    res.status(201).json(cafe);
-  } catch (err) {
-    res.status(500).json({ err: err.message });
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ err: 'Not authorized' });
   }
+
+  const cafe = await Cafe.create({
+    ...req.body,
+    createdBy: req.user._id,
+  });
+
+  res.status(201).json(cafe);
 });
 
 
