@@ -15,6 +15,10 @@ const userSchema = mongoose.Schema({
     default: 'Customer',
     required: true,
   },
+  token: {
+    type: String,
+    required: false,
+  },
 });
 
 userSchema.set('toJSON', {

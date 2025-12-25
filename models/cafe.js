@@ -82,6 +82,6 @@ cafeSchema.pre('save', function(next) {
   next();
 });
 
-const Cafe = mongoose.model('Cafe', cafeSchema);
+const Cafe = mongoose.model('Cafes', cafeSchema);
 
 module.exports = Cafe;
