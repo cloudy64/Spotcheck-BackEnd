@@ -6,7 +6,7 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.post('/sign-up', async (req, res) => {
-  // console.log("✅ HIT /auth/sign-in", req.body);
+
   try {
     const userInDatabase = await User.findOne({ username: req.body.username });
 
@@ -42,7 +42,7 @@ router.post('/sign-up', async (req, res) => {
 });
 
 router.post('/sign-in', async (req, res) => {
-  // console.log("✅ HIT /auth/sign-in", req.body);
+
   try {
     const userInDatabase = await User.findOne({ username: req.body.username });
 
